@@ -1,0 +1,9 @@
+Lab01 Answers
+
+Question 1:
+If user chooses Cancel, the program may return null or stop depending on handling.
+
+Question 2:
+We can customize options using JOptionPane with custom buttons.
+
+Done.
