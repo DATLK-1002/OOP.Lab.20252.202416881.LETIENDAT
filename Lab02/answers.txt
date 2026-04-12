@@ -1,74 +1,65 @@
-========== LAB02: Problem Modeling and Encapsulation - Reading Assignment Answers ==========
+LAB02: Problem Modeling and Encapsulation - Reading Assignment Answers
 
-1. What is the purpose of the UML Use Case Diagram in the AIMS project?
-Answer: The UML Use Case Diagram shows the functional requirements of the AIMS system from the user's perspective. It identifies the actors (Customer and Store Manager) and the use cases they can perform, such as browsing DVDs, searching, adding to cart, and placing orders. This helps visualize how different users interact with the system.
+1. Use Case Diagram có tác dụng gì?
+- Hiển thị các chức năng chính của hệ thống AIMS
+- Xác định các actors: Customer và Store Manager
+- Mô tả các use cases: Browse DVDs, Search, Add to Cart, Place Order, v.v.
+- Giúp visualize cách người dùng tương tác với hệ thống
 
-2. What are the three main classes in the Cart Management system?
-Answer: The three main classes are:
-   - Aims: The main entry point of the application with the main() method
-   - DigitalVideoDisc: Represents a DVD with properties (title, category, director, length, cost)
-   - Cart: Manages a collection of DVDs with methods to add/remove items and calculate total cost
+2. Ba lớp chính trong Cart Management là gì?
+- Aims: lớp chính với main() method
+- DigitalVideoDisc: đại diện cho DVD với các thuộc tính (title, category, director, length, cost)
+- Cart: quản lý collection của DVDs, có thể add/remove items và tính total cost
 
-3. What is encapsulation and how is it implemented in the DigitalVideoDisc class?
-Answer: Encapsulation is the bundling of data (attributes) and methods that operate on that data into a single unit (class), while hiding the internal details. In the DigitalVideoDisc class, encapsulation is implemented by:
-   - Making all attributes (title, category, director, length, cost) private
-   - Providing public getter and setter methods to access and modify these attributes
-   - This prevents direct access to the data and allows for validation and control
+3. Encapsulation là gì và được implement như thế nào?
+- Encapsulation là bundling data (attributes) và methods vào một class
+- Ẩn giấu internal details, chỉ expose public interface
+- Trong DigitalVideoDisc: các attributes là private, có public getters/setters
+- Điều này cho phép kiểm soát truy cập và validation dữ liệu
 
-4. What is the relationship between the Cart and DigitalVideoDisc classes?
-Answer: The Cart class has a composition relationship with DigitalVideoDisc. The Cart contains an ArrayList of DigitalVideoDisc objects. This means:
-   - A Cart can contain multiple DVDs
-   - When a Cart is created, it creates an empty collection
-   - DVDs can be added to or removed from the Cart
-   - The Cart can perform operations on the DVDs it contains
+4. Mối quan hệ giữa Cart và DigitalVideoDisc?
+- Cart có composition relationship với DigitalVideoDisc
+- Cart chứa một ArrayList của DigitalVideoDisc objects
+- Một Cart có thể chứa nhiều DVDs
+- Có thể add, remove, search DVDs trong Cart
 
-5. How does the Release Flow help in managing the development process?
-Answer: The Release Flow helps manage development by:
-   - Creating separate branches for different features or tasks
-   - Keeping the main branch stable and production-ready
-   - Allowing multiple developers to work on different features simultaneously
-   - Using pull requests for code review before merging
-   - Maintaining a clear history of changes and who made them
-   - Making it easier to track and manage different versions of the project
+5. Release Flow giúp gì trong development?
+- Tạo separate branches cho các features khác nhau
+- Giữ main branch stable và production-ready
+- Cho phép multiple developers làm việc cùng lúc
+- Sử dụng pull requests để code review trước khi merge
+- Dễ track changes và manage versions
 
-6. What are the key differences between the Aims, DigitalVideoDisc, and Cart classes?
-Answer: 
-   - Aims: Entry point class with main() method, orchestrates the application
-   - DigitalVideoDisc: Data model class representing a single DVD with its properties
-   - Cart: Container/collection class that manages multiple DVDs and provides operations like add, remove, search, and calculate total cost
+6. Khác nhau giữa Aims, DigitalVideoDisc, Cart?
+- Aims: entry point, orchestrates application
+- DigitalVideoDisc: data model, đại diện một DVD
+- Cart: container class, manages multiple DVDs và operations
 
-7. How would you extend the Cart class to support filtering DVDs by price range?
-Answer: You could add a method like:
-   public ArrayList<DigitalVideoDisc> searchByPriceRange(float minPrice, float maxPrice) {
-       ArrayList<DigitalVideoDisc> result = new ArrayList<DigitalVideoDisc>();
-       for (DigitalVideoDisc disc : this.items) {
-           if (disc.getCost() >= minPrice && disc.getCost() <= maxPrice) {
-               result.add(disc);
-           }
-       }
-       return result;
-   }
+7. Mở rộng Cart để filter DVDs theo price range?
+public ArrayList<DigitalVideoDisc> searchByPriceRange(float min, float max) {
+    ArrayList<DigitalVideoDisc> result = new ArrayList<>();
+    for (DigitalVideoDisc disc : this.items) {
+        if (disc.getCost() >= min && disc.getCost() <= max) {
+            result.add(disc);
+        }
+    }
+    return result;
+}
 
-8. What is the purpose of the toString() method in the DigitalVideoDisc class?
-Answer: The toString() method provides a string representation of a DigitalVideoDisc object. It's useful for:
-   - Debugging and logging
-   - Displaying DVD information in a readable format
-   - Converting the object to a string when needed
-   - It overrides the default Object.toString() method to provide meaningful information
+8. Tác dụng của toString() method?
+- Cung cấp string representation của object
+- Hữu ích cho debugging và logging
+- Hiển thị DVD info theo format dễ đọc
+- Override default Object.toString()
 
-9. Why is it important to validate input in the addDigitalVideoDisc() method?
-Answer: Validation is important because:
-   - It prevents null DVDs from being added to the cart
-   - It enforces the maximum cart size (20 DVDs)
-   - It prevents invalid data from corrupting the cart state
-   - It provides meaningful feedback to the user about why an operation failed
+9. Tại sao cần validate input trong addDigitalVideoDisc()?
+- Prevent null DVDs được add vào cart
+- Enforce maximum cart size (20 DVDs)
+- Prevent invalid data từ corrupting cart state
+- Provide meaningful feedback cho user
 
-10. How does the ArrayList in the Cart class provide flexibility compared to using a fixed-size array?
-Answer: ArrayList provides flexibility by:
-    - Automatically resizing when items are added or removed
-    - Providing built-in methods like add(), remove(), and size()
-    - Allowing dynamic growth without knowing the size in advance
-    - Reducing memory waste compared to pre-allocating a large fixed-size array
-    - Making the code cleaner and more maintainable
-
-========== End of Answers ==========
+10. ArrayList vs fixed-size array?
+- ArrayList tự động resize khi add/remove items
+- Có built-in methods: add(), remove(), size()
+- Không cần biết size trước
+- Tiết kiệm memory, code cleaner và maintainable hơn

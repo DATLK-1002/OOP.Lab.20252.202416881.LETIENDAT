@@ -1,48 +1,43 @@
-/**
- * Aims class - Main entry point for the AIMS (An Internet Media Store) application
- */
 public class Aims {
     public static void main(String[] args) {
-        // Create a new cart
+        // Tạo giỏ hàng
         Cart cart = new Cart();
 
-        // Create some DVDs
+        // Tạo một số DVD
         DigitalVideoDisc dvd1 = new DigitalVideoDisc("The Lion King", "Animation", "Roger Allers", 88, 19.95f);
         DigitalVideoDisc dvd2 = new DigitalVideoDisc("Star Wars", "Science Fiction", "George Lucas", 121, 24.95f);
         DigitalVideoDisc dvd3 = new DigitalVideoDisc("Inception", "Science Fiction", "Christopher Nolan", 148, 29.95f);
         DigitalVideoDisc dvd4 = new DigitalVideoDisc("Toy Story", "Animation", "John Lasseter", 81, 19.95f);
 
-        // Add DVDs to cart
+        // Thêm vào giỏ
         cart.addDigitalVideoDisc(dvd1);
         cart.addDigitalVideoDisc(dvd2);
         cart.addDigitalVideoDisc(dvd3);
         cart.addDigitalVideoDisc(dvd4);
 
-        // Print cart contents
+        // In giỏ hàng
         cart.printCart();
 
-        // Search for a DVD by title
-        System.out.println("\n--- Search by Title ---");
+        // Tìm kiếm theo tên
+        System.out.println("\n--- Tìm kiếm theo tên ---");
         DigitalVideoDisc found = cart.searchByTitle("Inception");
         if (found != null) {
-            System.out.println("Found: " + found);
-        } else {
-            System.out.println("DVD not found");
+            System.out.println("Tìm thấy: " + found);
         }
 
-        // Search for DVDs by category
-        System.out.println("\n--- Search by Category ---");
+        // Tìm kiếm theo thể loại
+        System.out.println("\n--- Tìm kiếm theo thể loại ---");
         java.util.ArrayList<DigitalVideoDisc> animationDVDs = cart.searchByCategory("Animation");
-        System.out.println("Animation DVDs found: " + animationDVDs.size());
+        System.out.println("Animation: " + animationDVDs.size() + " DVD");
         for (DigitalVideoDisc dvd : animationDVDs) {
             System.out.println("  - " + dvd.getTitle());
         }
 
-        // Remove a DVD from cart
-        System.out.println("\n--- Remove DVD ---");
+        // Xóa một DVD
+        System.out.println("\n--- Xóa DVD ---");
         cart.removeDigitalVideoDisc(dvd2);
 
-        // Print updated cart
+        // In lại giỏ
         cart.printCart();
     }
 }
