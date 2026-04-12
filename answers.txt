@@ -1,9 +1,47 @@
-Lab01 Answers
+Questions:
+- What happens if users choose “Cancel”?
+- How to customize the options to users, e.g. only two options: “Yes” and “No”, OR “I do”
+and “I don’t” (Suggestion: Use Javadocs or using Eclipse/Netbean IDE help).
 
-Question 1:
-If user chooses Cancel, the program may return null or stop depending on handling.
++) Điều gì xảy ra nếu người dùng chọn “Cancel”?
 
-Question 2:
-We can customize options using JOptionPane with custom buttons.
+Khi người dùng chọn “Cancel”, phương thức showConfirmDialog() sẽ trả về giá trị JOptionPane.CANCEL_OPTION (giá trị là 2). 
+Tuy nhiên, trong chương trình, chỉ có điều kiện kiểm tra nếu option == JOptionPane.YES_OPTION thì hiển thị "Yes", 
+còn lại tất cả các trường hợp khác đều hiển thị "No". 
+Do đó, khi người dùng chọn “Cancel”, chương trình sẽ hiển thị "No".
 
-Done.
+
++) Làm thế nào để tùy chỉnh các lựa chọn cho người dùng?
+
+Để tùy chỉnh các nút lựa chọn (ví dụ chỉ có “Yes” và “No”, hoặc đổi thành “I do” và “I don’t”), 
+ta không sử dụng showConfirmDialog() mà sử dụng phương thức showOptionDialog().
+
+Phương thức này cho phép lập trình viên tự định nghĩa các nút hiển thị theo ý muốn bằng cách truyền vào một mảng các lựa chọn.
+
+Ví dụ:
+import javax.swing.JOptionPane;
+
+public class ChoosingOption {
+    public static void main(String[] args) {
+
+        Object[] options = {"I do", "I don't"};
+
+        int choice = JOptionPane.showOptionDialog(
+                null,
+                "Do you want to change to the first class ticket?",
+                "Confirmation",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]
+        );
+
+        String result = (choice == 0) ? "I do" : "I don't";
+
+        JOptionPane.showMessageDialog(null, "You've chosen: " + result);
+
+        System.exit(0);
+    }
+}
+Khi đó, người dùng sẽ thấy hai nút “I do” và “I don’t” thay vì “Yes” và “No”.
