@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+  <name>AIMS Project</name>
+  <version>1.0</version>
+  <diagrams>
+    <!-- Use Case Diagram -->
+    <diagram type="usecase" name="AIMS Use Case Diagram">
+      <elements>
+        <!-- System -->
+        <system name="AIMS" x="200" y="100" width="400" height="300"/>
+        
+        <!-- Actors -->
+        <actor name="Customer" x="50" y="150"/>
+        <actor name="Store Manager" x="650" y="150"/>
+        
+        <!-- Use Cases -->
+        <usecase name="Browse DVDs" x="250" y="150"/>
+        <usecase name="Search DVDs" x="250" y="220"/>
+        <usecase name="View DVD Details" x="250" y="290"/>
+        <usecase name="Add to Cart" x="250" y="360"/>
+        <usecase name="View Cart" x="350" y="150"/>
+        <usecase name="Update Cart" x="350" y="220"/>
+        <usecase name="Place Order" x="350" y="290"/>
+        <usecase name="Manage DVDs" x="550" y="200"/>
+        <usecase name="Manage Orders" x="550" y="280"/>
+        
+        <!-- Associations -->
+        <association from="Customer" to="Browse DVDs"/>
+        <association from="Customer" to="Search DVDs"/>
+        <association from="Customer" to="View DVD Details"/>
+        <association from="Customer" to="Add to Cart"/>
+        <association from="Customer" to="View Cart"/>
+        <association from="Customer" to="Update Cart"/>
+        <association from="Customer" to="Place Order"/>
+        <association from="Store Manager" to="Manage DVDs"/>
+        <association from="Store Manager" to="Manage Orders"/>
+        
+        <!-- Include relationships -->
+        <include from="Place Order" to="View Cart"/>
+        <include from="Add to Cart" to="View DVD Details"/>
+      </elements>
+    </diagram>
+    
+    <!-- Class Diagram -->
+    <diagram type="class" name="Cart Management Class Diagram">
+      <elements>
+        <!-- Classes -->
+        <class name="Aims" x="100" y="50" width="150" height="80">
+          <operations>
+            <operation name="main()" visibility="public" returnType="void"/>
+          </operations>
+        </class>
+        
+        <class name="DigitalVideoDisc" x="350" y="50" width="200" height="150">
+          <attributes>
+            <attribute name="title" visibility="private" type="String"/>
+            <attribute name="category" visibility="private" type="String"/>
+            <attribute name="director" visibility="private" type="String"/>
+            <attribute name="length" visibility="private" type="int"/>
+            <attribute name="cost" visibility="private" type="float"/>
+          </attributes>
+          <operations>
+            <operation name="DigitalVideoDisc()" visibility="public" returnType="void"/>
+            <operation name="getTitle()" visibility="public" returnType="String"/>
+          </operations>
+        </class>
+        
+        <class name="Cart" x="200" y="250" width="200" height="120">
+          <attributes>
+            <attribute name="qtyOrdered" visibility="private" type="int"/>
+            <attribute name="items" visibility="private" type="DigitalVideoDisc[]"/>
+          </attributes>
+          <operations>
+            <operation name="addDigitalVideoDisc(disc: DigitalVideoDisc)" visibility="public" returnType="void"/>
+            <operation name="removeDigitalVideoDisc(disc: DigitalVideoDisc)" visibility="public" returnType="void"/>
+            <operation name="getTotalCost()" visibility="public" returnType="float"/>
+          </operations>
+        </class>
+        
+        <!-- Associations -->
+        <association from="Aims" to="Cart" type="dependency"/>
+        <association from="Cart" to="DigitalVideoDisc" type="composition" label="contains"/>
+      </elements>
+    </diagram>
+  </diagrams>
+</Project>

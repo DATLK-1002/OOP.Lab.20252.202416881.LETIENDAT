@@ -1,0 +1,65 @@
+LAB02: Problem Modeling and Encapsulation - Reading Assignment Answers
+
+1. Use Case Diagram có tác dụng gì?
+- Hiển thị các chức năng chính của hệ thống AIMS
+- Xác định các actors: Customer và Store Manager
+- Mô tả các use cases: Browse DVDs, Search, Add to Cart, Place Order, v.v.
+- Giúp visualize cách người dùng tương tác với hệ thống
+
+2. Ba lớp chính trong Cart Management là gì?
+- Aims: lớp chính với main() method
+- DigitalVideoDisc: đại diện cho DVD với các thuộc tính (title, category, director, length, cost)
+- Cart: quản lý collection của DVDs, có thể add/remove items và tính total cost
+
+3. Encapsulation là gì và được implement như thế nào?
+- Encapsulation là bundling data (attributes) và methods vào một class
+- Ẩn giấu internal details, chỉ expose public interface
+- Trong DigitalVideoDisc: các attributes là private, có public getters/setters
+- Điều này cho phép kiểm soát truy cập và validation dữ liệu
+
+4. Mối quan hệ giữa Cart và DigitalVideoDisc?
+- Cart có composition relationship với DigitalVideoDisc
+- Cart chứa một ArrayList của DigitalVideoDisc objects
+- Một Cart có thể chứa nhiều DVDs
+- Có thể add, remove, search DVDs trong Cart
+
+5. Release Flow giúp gì trong development?
+- Tạo separate branches cho các features khác nhau
+- Giữ main branch stable và production-ready
+- Cho phép multiple developers làm việc cùng lúc
+- Sử dụng pull requests để code review trước khi merge
+- Dễ track changes và manage versions
+
+6. Khác nhau giữa Aims, DigitalVideoDisc, Cart?
+- Aims: entry point, orchestrates application
+- DigitalVideoDisc: data model, đại diện một DVD
+- Cart: container class, manages multiple DVDs và operations
+
+7. Mở rộng Cart để filter DVDs theo price range?
+public ArrayList<DigitalVideoDisc> searchByPriceRange(float min, float max) {
+    ArrayList<DigitalVideoDisc> result = new ArrayList<>();
+    for (DigitalVideoDisc disc : this.items) {
+        if (disc.getCost() >= min && disc.getCost() <= max) {
+            result.add(disc);
+        }
+    }
+    return result;
+}
+
+8. Tác dụng của toString() method?
+- Cung cấp string representation của object
+- Hữu ích cho debugging và logging
+- Hiển thị DVD info theo format dễ đọc
+- Override default Object.toString()
+
+9. Tại sao cần validate input trong addDigitalVideoDisc()?
+- Prevent null DVDs được add vào cart
+- Enforce maximum cart size (20 DVDs)
+- Prevent invalid data từ corrupting cart state
+- Provide meaningful feedback cho user
+
+10. ArrayList vs fixed-size array?
+- ArrayList tự động resize khi add/remove items
+- Có built-in methods: add(), remove(), size()
+- Không cần biết size trước
+- Tiết kiệm memory, code cleaner và maintainable hơn
