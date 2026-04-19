@@ -1,0 +1,33 @@
+Reading Assignment - Lab03 Section 16: Polymorphism
+=====================================================
+
+Q1: What are the advantages of Polymorphism?
+- Code reusability: A single method or reference can work with objects of different types.
+- Flexibility and extensibility: New subclasses can be added without changing existing code that uses the parent type.
+- Cleaner code: Eliminates the need for many if-else or switch statements to handle different types.
+- Supports the Open/Closed Principle: classes are open for extension but closed for modification.
+
+Q2: How is Inheritance useful to achieve Polymorphism in Java?
+- Inheritance allows subclasses to override methods of the parent class.
+- When a parent-type reference holds a subclass object, Java calls the overridden method of the actual subclass at runtime (dynamic dispatch).
+- Without inheritance, there would be no common supertype to hold references to different objects polymorphically.
+
+Q3: What are the differences between Polymorphism and Inheritance in Java?
+- Inheritance is a mechanism where a subclass acquires the properties and behaviors of a parent class.
+  It is about the IS-A relationship and code reuse.
+- Polymorphism is the ability of a reference variable to take many forms — it allows one interface to
+  represent different underlying forms (data types).
+- Inheritance enables polymorphism, but polymorphism can also be achieved through interfaces
+  (without inheritance from a class).
+- Inheritance is a structural concept (class hierarchy), while polymorphism is a behavioral concept
+  (method dispatch at runtime).
+
+Q4 (Section 17 - Comparable approach):
+- The Media class should implement Comparable<Media>.
+- The compareTo() method should be implemented to define the default ordering (e.g., by title then cost).
+- Limitation: Comparable only supports ONE ordering rule per class. We cannot have two different
+  orderings (by title-cost AND by cost-title) with Comparable alone.
+- To support multiple orderings, we must use Comparator (as done in this lab with COMPARE_BY_TITLE_COST
+  and COMPARE_BY_COST_TITLE static fields in Media class).
+- For DVDs with a different rule (title, then decreasing length, then cost), we would create a separate
+  Comparator for DigitalVideoDisc and pass it to Collections.sort().
