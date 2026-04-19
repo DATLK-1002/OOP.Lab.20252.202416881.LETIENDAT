@@ -1,0 +1,17 @@
+Reading Assignment - Lab03: String, StringBuilder, StringBuffer
+==============================================================
+
+Q1: Explain why using String with the + operator inside a loop can lead to performance issues.
+
+Each time the + operator is used on a String, Java creates a new String object in memory because
+String is immutable. The old string is discarded and becomes garbage for the GC to collect.
+In a loop running n times, this creates n intermediate String objects, leading to O(n^2) memory
+allocations and significant GC pressure. For large n, this becomes noticeably slow.
+
+Q2: In what situations should you use StringBuilder instead of String?
+
+StringBuilder should be used when building or modifying a string repeatedly, especially inside
+loops or when concatenating many parts together. It is mutable, so append() modifies the same
+buffer in memory without creating new objects each time. Use String for simple, one-time
+concatenations or when the value does not change after creation.
+Use StringBuffer instead of StringBuilder only when thread safety is required.
