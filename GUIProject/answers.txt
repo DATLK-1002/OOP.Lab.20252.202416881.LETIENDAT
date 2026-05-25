@@ -1,0 +1,30 @@
+Lab04 - GUI Programming with Swing
+Student: Le Tien Dat - 202416881
+
+=== Section 1.3: Compare Swing and AWT ===
+
+1. Top-level containers:
+   - AWT: Frame is the top-level container. The application class extends Frame directly.
+   - Swing: JFrame is the top-level container. The application class extends JFrame.
+   JFrame is a more feature-rich wrapper around Frame and provides additional functionality
+   such as setDefaultCloseOperation(), which AWT Frame lacks.
+
+2. Component class names:
+   - AWT uses: Frame, Label, Button, TextField, Panel, etc.
+   - Swing uses: JFrame, JLabel, JButton, JTextField, JPanel, etc.
+   Swing components are prefixed with "J". Swing components are lightweight (drawn by Java
+   itself), while AWT components are heavyweight (rely on the OS native widgets).
+   Swing also provides more components not available in AWT (e.g., JTable, JTree, JTabbedPane).
+
+3. Event-handling:
+   - Both AWT and Swing use the same java.awt.event package for event handling.
+   - The event-handling model is identical: define a listener class implementing an interface
+     (e.g., ActionListener), create an instance, and register it with addActionListener().
+   - There is no difference in event-handling code between AWT and Swing applications.
+
+4. Appearance:
+   - AWT uses the native OS look-and-feel, so it looks different on Windows, macOS, and Linux.
+   - Swing uses a pluggable look-and-feel (default: Metal/Nimbus), which is consistent across
+     all platforms. Swing can also be configured to use the OS native look-and-feel via
+     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()).
+   - In general, Swing applications look more polished and consistent across platforms.
