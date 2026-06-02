@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hust.soict.elitech.aims.gui.controller.ItemController">
+    <top>
+        <VBox spacing="10" style="-fx-padding: 15; -fx-background-color: #f0f0f0;">
+            <Label fx:id="itemTitleLabel" text="Item Details" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+        </VBox>
+    </top>
+    
+    <center>
+        <VBox spacing="15" style="-fx-padding: 20;">
+            <!-- Item ID -->
+            <HBox spacing="10">
+                <Label text="ID:" style="-fx-min-width: 100;"/>
+                <Label fx:id="itemIdLabel" text="N/A"/>
+            </HBox>
+            
+            <!-- Item Title -->
+            <HBox spacing="10">
+                <Label text="Title:" style="-fx-min-width: 100;"/>
+                <Label fx:id="itemTitleValueLabel" text="N/A"/>
+            </HBox>
+            
+            <!-- Item Category -->
+            <HBox spacing="10">
+                <Label text="Category:" style="-fx-min-width: 100;"/>
+                <Label fx:id="itemCategoryLabel" text="N/A"/>
+            </HBox>
+            
+            <!-- Item Price -->
+            <HBox spacing="10">
+                <Label text="Price:" style="-fx-min-width: 100;"/>
+                <Label fx:id="itemPriceLabel" text="N/A"/>
+            </HBox>
+            
+            <!-- Item Quantity -->
+            <HBox spacing="10">
+                <Label text="Available Quantity:" style="-fx-min-width: 100;"/>
+                <Label fx:id="itemQuantityLabel" text="N/A"/>
+            </HBox>
+            
+            <!-- Item Description -->
+            <Label text="Description:" style="-fx-font-weight: bold;"/>
+            <TextArea fx:id="itemDescriptionArea" prefHeight="150" wrapText="true" editable="false"/>
+            
+            <!-- Quantity to Add -->
+            <HBox spacing="10">
+                <Label text="Quantity to Add:" style="-fx-min-width: 100;"/>
+                <Spinner fx:id="quantitySpinner" prefWidth="100" min="1" max="100" initialValue="1"/>
+            </HBox>
+        </VBox>
+    </center>
+    
+    <bottom>
+        <HBox spacing="10" style="-fx-padding: 15; -fx-alignment: center;">
+            <Button text="Add to Cart" onAction="#addToCart" style="-fx-padding: 8; -fx-font-size: 12;"/>
+            <Button text="Back" onAction="#back" style="-fx-padding: 8; -fx-font-size: 12;"/>
+        </HBox>
+    </bottom>
+</BorderPane>

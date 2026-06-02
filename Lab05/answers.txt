@@ -1,0 +1,216 @@
+OOP LAB 05: GUI Programming with JavaFX and Exception Handling
+Answers to Lab Questions
+
+================================================================================
+SECTION 1 & 2: SETUP JAVAFX AND SCENE BUILDER
+================================================================================
+
+Q1: What is JavaFX?
+A1: JavaFX is a modern Java-based framework for building desktop applications and rich 
+internet applications (RIAs). It provides a comprehensive set of graphics and media APIs 
+that allow developers to create visually appealing user interfaces with animations, 
+effects, and multimedia support. JavaFX is written in Java and runs on the Java Virtual 
+Machine (JVM).
+
+Q2: What is FXML?
+A2: FXML (FX Markup Language) is an XML-based declarative markup language used to define 
+user interfaces in JavaFX applications. It is similar to HTML and allows developers to 
+design UI layouts without writing Java code. FXML files can be created using JavaFX Scene 
+Builder or written manually in a text editor.
+
+Q3: What is Scene Builder?
+A3: JavaFX Scene Builder is a visual layout tool provided by JavaFX that enables developers 
+to design graphical user interfaces using a drag-and-drop interface. It generates FXML files 
+that can be loaded into JavaFX applications. Scene Builder provides an intuitive way to 
+design complex UI layouts without writing code.
+
+Q4: What is the difference between Stage and Scene?
+A4: 
+- Stage: Represents the top-level container of a JavaFX application (the window). It contains 
+  the window's title bar, border, and content area. A JavaFX application can have multiple 
+  stages, but typically one primary stage is displayed.
+- Scene: Represents the content area of a Stage. It contains the scene graph, which is a 
+  hierarchical tree of nodes (UI components). A Stage can display only one Scene at a time, 
+  but you can switch between scenes.
+
+Q5: What is Scene Graph?
+A5: Scene Graph is a hierarchical tree structure of nodes that represents all visual elements 
+in a JavaFX application. It consists of:
+- Root Node: The top-level node that contains all other nodes
+- Branch Nodes: Container nodes that can have children (e.g., Pane, VBox, HBox)
+- Leaf Nodes: Terminal nodes that represent UI controls (e.g., Button, Label, TextField)
+The scene graph is rendered from the root node down to the leaf nodes to display the UI.
+
+Q6: What are JavaFX Containers?
+A6: JavaFX Containers are layout nodes that organize and position child nodes. Common containers include:
+- BorderPane: Divides the layout into 5 regions (Top, Bottom, Left, Right, Center)
+- VBox: Arranges children vertically in a single column
+- HBox: Arranges children horizontally in a single row
+- GridPane: Arranges children in a grid of rows and columns
+- AnchorPane: Positions children using absolute coordinates or anchors
+- StackPane: Stacks children on top of each other
+- FlowPane: Arranges children in a flow that wraps to the next line
+
+Q7: What is Property Binding in JavaFX?
+A7: Property Binding is a mechanism in JavaFX that allows automatic synchronization of data 
+between UI controls and model objects. When a property is bound, changes to the source property 
+automatically update the target property. This reduces the need for manual event handling and 
+keeps the UI in sync with the underlying data model.
+
+================================================================================
+SECTION 3: PAINTER APPLICATION
+================================================================================
+
+Q8: Describe the architecture of the Painter application (Section 3.1-3.3)
+A8: The Painter application follows the MVC (Model-View-Controller) pattern:
+- Model: Not explicitly defined in this simple application
+- View: Painter.fxml - Defines the UI layout with BorderPane containing:
+  * Left panel (VBox): Menu with Clear button, Color Picker, Stroke Width Slider, Undo/Redo buttons
+  * Center panel (Pane): Drawing canvas where shapes are rendered
+- Controller: PainterController.java - Handles user interactions and drawing logic
+- Application: Painter.java - Main entry point that loads the FXML and starts the application
+
+Q9: How does the drawing mechanism work in the Painter application?
+A9: The drawing mechanism works as follows:
+1. User moves mouse over the drawing area and presses/drags
+2. Mouse events are captured by the PainterController
+3. For each mouse event, a Circle shape is created at the mouse coordinates
+4. The Circle is styled with the current color and stroke width
+5. The Circle is added to the drawing area Pane
+6. The Circle is also pushed to the undo stack for undo/redo functionality
+
+Q10: What is the purpose of the ColorPicker in the Painter application?
+A10: The ColorPicker allows users to select the color for drawing. When a color is selected, 
+the onColorChanged() method is called, which updates the currentColor variable. All subsequently 
+drawn shapes will use this new color until a different color is selected.
+
+================================================================================
+SECTION 3.4: IMPROVEMENTS TO PAINTER APPLICATION
+================================================================================
+
+Q11: Exercise 3.4.1 - Draw when mouse down
+A11: Implementation:
+- Added drawingAreaMousePressed() method to handle the "On Mouse Pressed" event
+- This method creates a Circle at the mouse coordinates immediately when the mouse button is pressed
+- This allows users to draw even without dragging the mouse
+- The Circle is added to both the drawing area and the undo stack
+
+Q12: Exercise 3.4.2 - Draw with different colors
+A12: Implementation:
+- Added ColorPicker control to the left panel in Painter.fxml
+- Added onColorChanged() method in PainterController to update currentColor when color is selected
+- Modified createCircle() method to use currentColor when creating new shapes
+- Users can now select any color from the color picker and all subsequent drawings will use that color
+
+Q13: Exercise 3.4.3 - Draw with different stroke widths
+A13: Implementation:
+- Added Slider control to the left panel in Painter.fxml (range 1-20)
+- Added onStrokeWidthChanged() method to update currentStrokeWidth when slider value changes
+- Modified createCircle() method to use currentStrokeWidth as the radius of the Circle
+- Added Label to display the current stroke width value
+- Users can adjust the slider to change the size of drawn circles
+
+Q14: Exercise 3.4.4 - Undo/Redo functionality
+A14: Implementation:
+- Added two Stack data structures: undoStack and redoStack
+- When a shape is drawn, it is pushed to the undoStack
+- When undo is clicked, the last shape is popped from undoStack and pushed to redoStack
+- When redo is clicked, the last shape is popped from redoStack and pushed back to undoStack
+- When new shapes are drawn, the redoStack is cleared to maintain consistency
+- This allows users to undo and redo their drawing actions
+
+================================================================================
+SECTION 4: CREATE PACKAGES FOR AIMS CUSTOMER APPLICATION
+================================================================================
+
+Q15: What packages were created for the AIMS customer application?
+A15: The following packages were created:
+- hust.soict.elitech.aims.gui: Main GUI package containing the AimsStore application class
+- hust.soict.elitech.aims.gui.controller: Contains all controller classes
+  * ViewStoreController: Controls the store view and displays items in a table
+  * ItemController: Controls the item details view
+- hust.soict.elitech.aims.gui.view: Reserved for view-related classes (can be extended)
+
+Q16: What is the purpose of each controller?
+A16:
+- ViewStoreController: Manages the main store view, displays items from the store in a TableView,
+  handles user interactions (view details, add to cart, view cart, exit)
+- ItemController: Manages the item details view, displays detailed information about a selected item,
+  allows users to specify quantity and add to cart
+
+================================================================================
+SECTION 5: DESIGN AND CODE AIMS CUSTOMER APPLICATION
+================================================================================
+
+Q17: Section 5.1 - Design Store.fxml
+A17: Store.fxml layout includes:
+- Top section: Header with title "AIMS Store" and welcome message
+- Center section: TableView displaying all items from the store with columns:
+  * ID: Item identifier
+  * Title: Item title
+  * Category: Item category (Book, DVD, CD)
+  * Price: Item price
+  * Quantity: Available quantity
+- Bottom section: Buttons for View Details, Add to Cart, View Cart, and Exit
+
+Q18: Section 5.2 - Design Item.fxml and code ItemController.java
+A18: Item.fxml layout includes:
+- Top section: Header showing item title
+- Center section: Detailed item information (ID, Title, Category, Price, Quantity, Description)
+- Spinner control to select quantity to add to cart
+- Bottom section: Buttons for Add to Cart and Back
+
+ItemController.java:
+- setItem() method: Populates the UI with selected item information
+- addToCart() method: Adds the selected quantity of the item to the cart
+- back() method: Returns to the store view
+
+Q19: Section 5.3 - Code ViewStoreController.java
+A19: ViewStoreController.java includes:
+- initialize() method: Sets up the store, cart, and table columns
+- loadStoreItems() method: Loads items from the store into the TableView
+- viewItemDetails() method: Shows the item details view for the selected item
+- addToCart() method: Adds the selected item to the cart
+- viewCart() method: Displays cart information (total items and cost)
+- exit() method: Closes the application
+- addItemToCart() method: Helper method called from ItemController to add items to cart
+
+================================================================================
+EXCEPTION HANDLING
+================================================================================
+
+Q20: What are the main scenarios where exceptions occur in the AIMS application?
+A20: Main exception scenarios:
+1. CloneNotSupportedException: Occurs when cloning Media objects for cart operations
+2. NullPointerException: Can occur if null items are selected or accessed
+3. NumberFormatException: Can occur when parsing user input
+4. FileNotFoundException: Can occur when loading FXML files or resources
+5. IOException: Can occur during file I/O operations
+
+Q21: How is exception handling implemented in the controllers?
+A21: Exception handling is implemented using:
+- Try-catch blocks: Wrapped around code that might throw exceptions (e.g., cloning operations)
+- Null checks: Before accessing object properties to prevent NullPointerException
+- Logging: Using System.out.println() to log errors and debug information
+- Graceful degradation: Application continues to run even if some operations fail
+
+================================================================================
+JAVAFX FEATURES USED IN LAB05
+================================================================================
+
+Q22: What JavaFX features were used in this lab?
+A22: Key JavaFX features used:
+1. FXML: Declarative UI definition in XML format
+2. Scene Builder: Visual layout design tool
+3. Containers: BorderPane, VBox, HBox for layout management
+4. Controls: Button, Label, ColorPicker, Slider, Spinner, TableView, TextArea
+5. Event Handling: Mouse events (pressed, dragged, released), Action events
+6. Property Binding: TableView columns bound to Media object properties
+7. Shapes: Circle for drawing in the Painter application
+8. Collections: ObservableList for TableView data
+9. Styling: CSS-like styling for UI controls
+10. Stage and Scene: Window and content management
+
+================================================================================
+END OF ANSWERS
+================================================================================

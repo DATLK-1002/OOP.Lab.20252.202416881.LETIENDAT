@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hust.soict.elitech.aims.gui.controller.ViewStoreController">
+    <top>
+        <VBox spacing="10" style="-fx-padding: 15; -fx-background-color: #f0f0f0;">
+            <Label text="AIMS Store" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+            <Label text="Welcome to AIMS - Your favorite media store" style="-fx-font-size: 12; -fx-text-fill: #666666;"/>
+        </VBox>
+    </top>
+    
+    <center>
+        <VBox spacing="10" style="-fx-padding: 15;">
+            <Label text="Available Items" style="-fx-font-size: 14; -fx-font-weight: bold;"/>
+            
+            <!-- TableView for displaying items -->
+            <TableView fx:id="itemTableView" prefHeight="400">
+                <columns>
+                    <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
+                    <TableColumn fx:id="titleColumn" text="Title" prefWidth="200"/>
+                    <TableColumn fx:id="categoryColumn" text="Category" prefWidth="100"/>
+                    <TableColumn fx:id="priceColumn" text="Price" prefWidth="80"/>
+                    <TableColumn fx:id="quantityColumn" text="Quantity" prefWidth="80"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+    
+    <bottom>
+        <HBox spacing="10" style="-fx-padding: 15; -fx-alignment: center;">
+            <Button text="View Item Details" onAction="#viewItemDetails" style="-fx-padding: 8; -fx-font-size: 12;"/>
+            <Button text="Add to Cart" onAction="#addToCart" style="-fx-padding: 8; -fx-font-size: 12;"/>
+            <Button text="View Cart" onAction="#viewCart" style="-fx-padding: 8; -fx-font-size: 12;"/>
+            <Button text="Exit" onAction="#exit" style="-fx-padding: 8; -fx-font-size: 12;"/>
+        </HBox>
+    </bottom>
+</BorderPane>
