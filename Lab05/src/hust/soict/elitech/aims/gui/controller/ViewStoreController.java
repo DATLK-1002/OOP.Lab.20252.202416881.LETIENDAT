@@ -7,6 +7,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.collections.FXCollections;
@@ -40,6 +42,9 @@ public class ViewStoreController {
     @FXML
     private TableColumn<Media, Integer> quantityColumn;
     
+    @FXML
+    private GridPane itemGridPane;
+    
     private Store store;
     private Cart cart;
     private Stage primaryStage;
@@ -54,15 +59,22 @@ public class ViewStoreController {
         store = new Store();
         cart = new Cart();
         
-        // Setup table columns
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("categoryName"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantityAvailable"));
+        // Setup table columns if using TableView
+        if (idColumn != null) {
+            idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+            titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+            categoryColumn.setCellValueFactory(new PropertyValueFactory<>("categoryName"));
+            priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+            quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantityAvailable"));
+            
+            // Load items from store
+            loadStoreItems();
+        }
         
-        // Load items from store
-        loadStoreItems();
+        // Setup GridPane if using GridPane layout
+        if (itemGridPane != null) {
+            loadItemsToGridPane();
+        }
     }
     
     /**
@@ -71,6 +83,39 @@ public class ViewStoreController {
     private void loadStoreItems() {
         ObservableList<Media> items = FXCollections.observableArrayList(store.getItemsInStore());
         itemTableView.setItems(items);
+    }
+    
+    /**
+     * Load items from store into GridPane
+     * Section 5.3: Fill GridPane with media items
+     */
+    private void loadItemsToGridPane() {
+        try {
+            int column = 0;
+            int row = 0;
+            
+            for (Media media : store.getItemsInStore()) {
+                // Load Item.fxml for each media
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Item.fxml"));
+                AnchorPane itemPane = fxmlLoader.load();
+                
+                // Get the ItemController and set data
+                ItemController controller = fxmlLoader.getController();
+                controller.setItem(media, this);
+                
+                // Add to GridPane
+                itemGridPane.add(itemPane, column, row);
+                
+                // Move to next column
+                column++;
+                if (column == 3) { // 3 columns per row
+                    column = 0;
+                    row++;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     /**
@@ -117,7 +162,12 @@ public class ViewStoreController {
      */
     public void showStoreView() {
         // This method can be used to refresh or return to store view
-        loadStoreItems();
+        if (itemTableView != null) {
+            loadStoreItems();
+        }
+        if (itemGridPane != null) {
+            loadItemsToGridPane();
+        }
     }
     
     /**
@@ -133,6 +183,7 @@ public class ViewStoreController {
             cart.addMedia(cartItem);
             System.out.println("Added " + quantity + " x " + item.getTitle() + " to cart");
         } catch (CloneNotSupportedException e) {
+            System.err.println("Error: Cannot clone media object - " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -148,6 +199,7 @@ public class ViewStoreController {
                 cart.addMedia(selectedItem.clone());
                 System.out.println("Added " + selectedItem.getTitle() + " to cart");
             } catch (CloneNotSupportedException e) {
+                System.err.println("Error: Cannot clone media object - " + e.getMessage());
                 e.printStackTrace();
             }
         } else {

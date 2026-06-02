@@ -1,0 +1,217 @@
+OOP LAB 05: Lập trình GUI với JavaFX và Xử lý Ngoại lệ
+Câu trả lời cho các câu hỏi bài tập
+
+================================================================================
+PHẦN 1 & 2: CÀI ĐẶT JAVAFX VÀ SCENE BUILDER
+================================================================================
+
+Q1: JavaFX là gì?
+A1: JavaFX là một framework hiện đại dựa trên Java để xây dựng các ứng dụng desktop 
+và các ứng dụng internet phong phú (RIAs). Nó cung cấp một bộ API đồ họa và đa phương 
+tiện toàn diện cho phép các nhà phát triển tạo các giao diện người dùng hấp dẫn với 
+hoạt ảnh, hiệu ứng và hỗ trợ đa phương tiện. JavaFX được viết bằng Java và chạy trên 
+Máy ảo Java (JVM).
+
+Q2: FXML là gì?
+A2: FXML (FX Markup Language) là một ngôn ngữ đánh dấu khai báo dựa trên XML được sử 
+dụng để định nghĩa giao diện người dùng trong các ứng dụng JavaFX. Nó tương tự như HTML 
+và cho phép các nhà phát triển thiết kế bố cục UI mà không cần viết mã Java. Các tệp FXML 
+có thể được tạo bằng JavaFX Scene Builder hoặc viết thủ công trong trình soạn thảo văn bản.
+
+Q3: Scene Builder là gì?
+A3: JavaFX Scene Builder là một công cụ bố cục trực quan được cung cấp bởi JavaFX cho 
+phép các nhà phát triển thiết kế giao diện người dùng đồ họa bằng cách sử dụng giao diện 
+kéo và thả. Nó tạo ra các tệp FXML có thể được tải vào các ứng dụng JavaFX. Scene Builder 
+cung cấp một cách trực quan để thiết kế các bố cục UI phức tạp mà không cần viết mã.
+
+Q4: Sự khác biệt giữa Stage và Scene là gì?
+A4: 
+- Stage: Đại diện cho vùng chứa cấp cao nhất của một ứng dụng JavaFX (cửa sổ). Nó chứa 
+  thanh tiêu đề, viền và vùng nội dung của cửa sổ. Một ứng dụng JavaFX có thể có nhiều 
+  stage, nhưng thường chỉ hiển thị một stage chính.
+- Scene: Đại diện cho vùng nội dung của một Stage. Nó chứa scene graph, đó là một cây 
+  phân cấp của các node (thành phần UI). Một Stage chỉ có thể hiển thị một Scene tại một 
+  thời điểm, nhưng bạn có thể chuyển đổi giữa các scene.
+
+Q5: Scene Graph là gì?
+A5: Scene Graph là một cấu trúc cây phân cấp của các node đại diện cho tất cả các phần 
+tử trực quan trong một ứng dụng JavaFX. Nó bao gồm:
+- Root Node: Node cấp cao nhất chứa tất cả các node khác
+- Branch Nodes: Các node vùng chứa có thể có các node con (ví dụ: Pane, VBox, HBox)
+- Leaf Nodes: Các node cuối cùng đại diện cho các điều khiển UI (ví dụ: Button, Label, TextField)
+Scene graph được hiển thị từ root node xuống các leaf node để hiển thị UI.
+
+Q6: JavaFX Containers là gì?
+A6: JavaFX Containers là các node bố cục tổ chức và định vị các node con. Các vùng chứa 
+phổ biến bao gồm:
+- BorderPane: Chia bố cục thành 5 vùng (Trên, Dưới, Trái, Phải, Giữa)
+- VBox: Sắp xếp các node con theo chiều dọc trong một cột
+- HBox: Sắp xếp các node con theo chiều ngang trong một hàng
+- GridPane: Sắp xếp các node con trong một lưới các hàng và cột
+- AnchorPane: Định vị các node con bằng cách sử dụng tọa độ tuyệt đối hoặc neo
+- StackPane: Xếp chồng các node con lên nhau
+- FlowPane: Sắp xếp các node con theo một luồng bao quanh dòng tiếp theo
+
+Q7: Property Binding trong JavaFX là gì?
+A7: Property Binding là một cơ chế trong JavaFX cho phép đồng bộ hóa tự động dữ liệu 
+giữa các điều khiển UI và các đối tượng mô hình. Khi một thuộc tính được ràng buộc, 
+các thay đổi đối với thuộc tính nguồn sẽ tự động cập nhật thuộc tính đích. Điều này 
+giảm bớt nhu cầu xử lý sự kiện thủ công và giữ cho UI đồng bộ với mô hình dữ liệu cơ bản.
+
+================================================================================
+PHẦN 3: ỨNG DỤNG PAINTER
+================================================================================
+
+Q8: Mô tả kiến trúc của ứng dụng Painter (Phần 3.1-3.3)
+A8: Ứng dụng Painter tuân theo mô hình MVC (Model-View-Controller):
+- Model: Không được định nghĩa rõ ràng trong ứng dụng đơn giản này
+- View: Painter.fxml - Định nghĩa bố cục UI với BorderPane chứa:
+  * Panel bên trái (VBox): Menu với nút Clear, Color Picker, Stroke Width Slider, nút Undo/Redo
+  * Panel giữa (Pane): Canvas vẽ nơi các hình dạng được hiển thị
+- Controller: PainterController.java - Xử lý các tương tác của người dùng và logic vẽ
+- Application: Painter.java - Điểm vào chính tải FXML và khởi động ứng dụng
+
+Q9: Cơ chế vẽ trong ứng dụng Painter hoạt động như thế nào?
+A9: Cơ chế vẽ hoạt động như sau:
+1. Người dùng di chuyển chuột trên vùng vẽ và nhấn/kéo
+2. Các sự kiện chuột được PainterController bắt giữ
+3. Đối với mỗi sự kiện chuột, một hình Circle được tạo tại tọa độ chuột
+4. Circle được tạo kiểu với màu hiện tại và độ dày nét
+5. Circle được thêm vào Pane vùng vẽ
+6. Circle cũng được đẩy vào stack undo để có chức năng undo/redo
+
+Q10: Mục đích của ColorPicker trong ứng dụng Painter là gì?
+A10: ColorPicker cho phép người dùng chọn màu để vẽ. Khi một màu được chọn, 
+phương thức onColorChanged() được gọi, cập nhật biến currentColor. Tất cả các hình dạng 
+được vẽ sau đó sẽ sử dụng màu mới này cho đến khi một màu khác được chọn.
+
+================================================================================
+PHẦN 3.4: CẢI THIỆN ỨNG DỤNG PAINTER
+================================================================================
+
+Q11: Bài tập 3.4.1 - Vẽ khi nhấn chuột
+A11: Cách thực hiện:
+- Thêm phương thức drawingAreaMousePressed() để xử lý sự kiện "On Mouse Pressed"
+- Phương thức này tạo một Circle tại tọa độ chuột ngay khi nút chuột được nhấn
+- Điều này cho phép người dùng vẽ ngay cả khi không kéo chuột
+- Circle được thêm vào cả vùng vẽ và stack undo
+
+Q12: Bài tập 3.4.2 - Vẽ với nhiều màu khác nhau
+A12: Cách thực hiện:
+- Thêm điều khiển ColorPicker vào panel bên trái trong Painter.fxml
+- Thêm phương thức onColorChanged() trong PainterController để cập nhật currentColor khi màu được chọn
+- Sửa đổi phương thức createCircle() để sử dụng currentColor khi tạo các hình dạng mới
+- Người dùng bây giờ có thể chọn bất kỳ màu nào từ color picker và tất cả các bản vẽ tiếp theo sẽ sử dụng màu đó
+
+Q13: Bài tập 3.4.3 - Vẽ với độ dày nét khác nhau
+A13: Cách thực hiện:
+- Thêm điều khiển Slider vào panel bên trái trong Painter.fxml (phạm vi 1-20)
+- Thêm phương thức onStrokeWidthChanged() để cập nhật currentStrokeWidth khi giá trị slider thay đổi
+- Sửa đổi phương thức createCircle() để sử dụng currentStrokeWidth làm bán kính của Circle
+- Thêm Label để hiển thị giá trị độ dày nét hiện tại
+- Người dùng có thể điều chỉnh slider để thay đổi kích thước các circle được vẽ
+
+Q14: Bài tập 3.4.4 - Chức năng Undo/Redo
+A14: Cách thực hiện:
+- Thêm hai cấu trúc dữ liệu Stack: undoStack và redoStack
+- Khi một hình dạng được vẽ, nó được đẩy vào undoStack
+- Khi undo được nhấp, hình dạng cuối cùng được lấy ra từ undoStack và đẩy vào redoStack
+- Khi redo được nhấp, hình dạng cuối cùng được lấy ra từ redoStack và đẩy lại vào undoStack
+- Khi các hình dạng mới được vẽ, redoStack được xóa để duy trì tính nhất quán
+- Điều này cho phép người dùng hoàn tác và làm lại các hành động vẽ của họ
+
+================================================================================
+PHẦN 4: TẠO CÁC GÓI CHO ỨNG DỤNG KHÁCH HÀNG AIMS
+================================================================================
+
+Q15: Những gói nào được tạo cho ứng dụng khách hàng AIMS?
+A15: Các gói sau được tạo:
+- hust.soict.elitech.aims.gui: Gói GUI chính chứa lớp ứng dụng AimsStore
+- hust.soict.elitech.aims.gui.controller: Chứa tất cả các lớp controller
+  * ViewStoreController: Điều khiển chế độ xem cửa hàng và hiển thị các mục trong bảng
+  * ItemController: Điều khiển chế độ xem chi tiết mục
+- hust.soict.elitech.aims.gui.view: Dành riêng cho các lớp liên quan đến chế độ xem (có thể mở rộng)
+
+Q16: Mục đích của mỗi controller là gì?
+A16:
+- ViewStoreController: Quản lý chế độ xem cửa hàng chính, hiển thị các mục từ cửa hàng trong TableView,
+  xử lý các tương tác của người dùng (xem chi tiết, thêm vào giỏ hàng, xem giỏ hàng, thoát)
+- ItemController: Quản lý chế độ xem chi tiết mục, hiển thị thông tin chi tiết về một mục được chọn,
+  cho phép người dùng chỉ định số lượng và thêm vào giỏ hàng
+
+================================================================================
+PHẦN 5: THIẾT KẾ VÀ MÃ HÓA ỨNG DỤNG KHÁCH HÀNG AIMS
+================================================================================
+
+Q17: Phần 5.1 - Thiết kế Store.fxml
+A17: Bố cục Store.fxml bao gồm:
+- Phần trên: Tiêu đề với "AIMS Store" và thông báo chào mừng
+- Phần giữa: TableView hiển thị tất cả các mục từ cửa hàng với các cột:
+  * ID: Mã định danh mục
+  * Title: Tiêu đề mục
+  * Category: Danh mục mục (Sách, DVD, CD)
+  * Price: Giá mục
+  * Quantity: Số lượng có sẵn
+- Phần dưới: Các nút để Xem Chi tiết, Thêm vào Giỏ hàng, Xem Giỏ hàng và Thoát
+
+Q18: Phần 5.2 - Thiết kế Item.fxml và mã hóa ItemController.java
+A18: Bố cục Item.fxml bao gồm:
+- Phần trên: Tiêu đề hiển thị tiêu đề mục
+- Phần giữa: Thông tin chi tiết mục (ID, Tiêu đề, Danh mục, Giá, Số lượng, Mô tả)
+- Điều khiển Spinner để chọn số lượng cần thêm vào giỏ hàng
+- Phần dưới: Các nút để Thêm vào Giỏ hàng và Quay lại
+
+ItemController.java:
+- Phương thức setItem(): Điền thông tin mục được chọn vào UI
+- Phương thức addToCart(): Thêm số lượng được chọn của mục vào giỏ hàng
+- Phương thức back(): Quay lại chế độ xem cửa hàng
+
+Q19: Phần 5.3 - Mã hóa ViewStoreController.java
+A19: ViewStoreController.java bao gồm:
+- Phương thức initialize(): Thiết lập cửa hàng, giỏ hàng và các cột bảng
+- Phương thức loadStoreItems(): Tải các mục từ cửa hàng vào TableView
+- Phương thức viewItemDetails(): Hiển thị chế độ xem chi tiết mục cho mục được chọn
+- Phương thức addToCart(): Thêm mục được chọn vào giỏ hàng
+- Phương thức viewCart(): Hiển thị thông tin giỏ hàng (tổng số mục và chi phí)
+- Phương thức exit(): Đóng ứng dụng
+- Phương thức addItemToCart(): Phương thức trợ giúp được gọi từ ItemController để thêm mục vào giỏ hàng
+
+================================================================================
+XỬ LÝ NGOẠI LỆ
+================================================================================
+
+Q20: Những tình huống chính nào mà ngoại lệ xảy ra trong ứng dụng AIMS?
+A20: Các tình huống ngoại lệ chính:
+1. CloneNotSupportedException: Xảy ra khi sao chép các đối tượng Media cho các hoạt động giỏ hàng
+2. NullPointerException: Có thể xảy ra nếu các mục null được chọn hoặc truy cập
+3. NumberFormatException: Có thể xảy ra khi phân tích cú pháp đầu vào của người dùng
+4. FileNotFoundException: Có thể xảy ra khi tải các tệp FXML hoặc tài nguyên
+5. IOException: Có thể xảy ra trong các hoạt động I/O tệp
+
+Q21: Xử lý ngoại lệ được triển khai như thế nào trong các controller?
+A21: Xử lý ngoại lệ được triển khai bằng cách sử dụng:
+- Khối try-catch: Bao quanh mã có thể ném ngoại lệ (ví dụ: hoạt động sao chép)
+- Kiểm tra null: Trước khi truy cập các thuộc tính đối tượng để ngăn chặn NullPointerException
+- Ghi nhật ký: Sử dụng System.out.println() để ghi nhật ký lỗi và thông tin gỡ lỗi
+- Giảm chất lượng một cách duyên hòa: Ứng dụng tiếp tục chạy ngay cả khi một số hoạt động không thành công
+
+================================================================================
+CÁC TÍNH NĂNG JAVAFX ĐƯỢC SỬ DỤNG TRONG LAB05
+================================================================================
+
+Q22: Những tính năng JavaFX nào được sử dụng trong bài tập này?
+A22: Các tính năng JavaFX chính được sử dụng:
+1. FXML: Định nghĩa UI khai báo ở định dạng XML
+2. Scene Builder: Công cụ thiết kế bố cục trực quan
+3. Containers: BorderPane, VBox, HBox để quản lý bố cục
+4. Controls: Button, Label, ColorPicker, Slider, Spinner, TableView, TextArea
+5. Event Handling: Sự kiện chuột (nhấn, kéo, thả lên), sự kiện hành động
+6. Property Binding: Các cột TableView ràng buộc với các thuộc tính đối tượng Media
+7. Shapes: Circle để vẽ trong ứng dụng Painter
+8. Collections: ObservableList để ràng buộc dữ liệu TableView
+9. Styling: Tạo kiểu giống CSS cho các điều khiển UI
+10. Stage and Scene: Quản lý cửa sổ và nội dung
+
+================================================================================
+KẾT THÚC CÁC CÂU TRẢ LỜI
+================================================================================
